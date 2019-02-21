@@ -1,0 +1,51 @@
+// アプリケーションのgroupIdとversionを指定
+group 'com.dais39'
+version '1.0-SNAPSHOT'
+
+// buildscriptはビルドスクリプトが依存しているライブラリを指定するブロック
+buildscript {
+
+    // extは変数を宣言するためのブロック
+    ext {
+        kotlin_version = '1.2.60'
+        ktor_version = '0.9.3'
+    }
+
+    // 依存性を解決するためのリポジトリを指定するブロック
+    repositories {
+        mavenCentral()
+    }
+
+    // 依存しているライブラリを指定するブロック
+    // groupId, artifactId, versionは:区切り
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+// applyはビルド設定で利用するプラグインを宣言する
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'MainKt'
+
+sourceCompatibility = 1.8
+
+// 依存性を解決するためのリポジトリを指定するブロック
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
+}
+
+// プロジェクトが依存しているライブラリを指定する
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "ch.qos.logback:logback-classic:1.2.1"
+    compile "io.ktor:ktor-jackson:$ktor_version"
+    compile "io.ktor:ktor-gson:$ktor_version"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
